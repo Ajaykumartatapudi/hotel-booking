@@ -18,9 +18,7 @@ const Content = () => {
         {/* Discover Section */}
         <div className="d-flex justify-content-between align-items-baseline mb-3">
           <h2>Discover your new favourite stay</h2>
-          <a href="#" className="text-decoration-none small">
-            View all types
-          </a>
+
         </div>
 
         <div className="row g-3 mb-5">
@@ -104,9 +102,9 @@ const Content = () => {
         {/* Recommended Section */}
         <div className="d-flex justify-content-between align-items-baseline mb-3">
           <h2>Recommended stays for you</h2>
-          <a href="#" className="text-decoration-none small">
+          {/* <a >
             See all recommendations
-          </a>
+          </a> */}
         </div>
 
         <div className="row g-3">

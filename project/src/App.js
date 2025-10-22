@@ -1,20 +1,20 @@
 import React from "react";
 import './App.css';
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero"; 
+import Hero from "./components/Hero";
 import Content from "./components/Content";
-import "./App.css"; // or "./Content.css"
-
+import Footer from "./components/Footer";  
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div>
+    <>
       <Navbar />
       <Hero />
-      {/* <MainContent /> */}
-      <Content/>
-    </div>
+      <Content />
+      <Footer /> 
+    </>
+    
   );
 }
 

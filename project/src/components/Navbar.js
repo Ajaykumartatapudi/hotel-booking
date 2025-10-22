@@ -1,5 +1,6 @@
 // src/components/Navbar.jsx
 import React from "react";
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Navbar = () => {
     return (
