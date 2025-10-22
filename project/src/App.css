@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+.card {
+  height: 100%;
+}
+
+.card-img-top {
+  height: 200px; /* you can adjust this */
+  object-fit: cover; /* crop to fill evenly */
+  width: 100%;
+}
