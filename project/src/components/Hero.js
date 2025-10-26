@@ -1,9 +1,49 @@
-// src/components/Hero.jsx
-import React from "react";
+import React, { useState } from "react";
 import "./Hero.css";
 import hotelImg from "../images/hotel.jpg";
 
+// Example dummy hotel data
+const hotels = [
+  { id: 1, name: "Beach Resort Goa", location: "Goa" },
+  { id: 2, name: "Mountain Retreat Kerala", location: "Kerala" },
+  { id: 3, name: "City Hotel Mumbai", location: "Mumbai" },
+  { id: 4, name: "Luxury Inn Goa", location: "Goa" },
+  { id: 5, name: "Novotel City Center", location: "Mumbai" },
+];
+
 const Hero = () => {
+  const [formData, setFormData] = useState({
+    whereTo: "",
+    checkIn: "",
+    checkOut: "",
+    persons: "1",
+    rooms: "1",
+  });
+
+  const [filteredHotels, setFilteredHotels] = useState([]);
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    const query = formData.whereTo.toLowerCase();
+
+    // Filter hotels by matching location or name
+    const results = hotels.filter(
+      (hotel) =>
+        hotel.location.toLowerCase().includes(query) ||
+        hotel.name.toLowerCase().includes(query)
+    );
+
+    setFilteredHotels(results);
+  };
+
   return (
     <section
       className="hero py-5"
@@ -18,7 +58,7 @@ const Hero = () => {
         alignItems: "center",
       }}
     >
-      {/* 🟢 Dark Overlay */}
+      {/* Dark Overlay */}
       <div
         style={{
           position: "absolute",
@@ -31,7 +71,7 @@ const Hero = () => {
         }}
       ></div>
 
-      {/* 🟢 Hero Content */}
+      {/* Hero Content */}
       <div
         className="hero-content"
         style={{
@@ -43,13 +83,11 @@ const Hero = () => {
         <div className="container">
           <div
             className="row align-items-center justify-content-between"
-            style={{ gap: "40px" }} // 👈 gap between text & search card increased
+            style={{ gap: "40px" }}
           >
             <div className="col-lg-6 text-gradient">
               <div className="typewriter mb-3">
-                <h1 className="display-5 fw-bold">
-                  Find and book great places 
-                </h1>
+                <h1 className="display-5 fw-bold">Find and book great places</h1>
               </div>
               <p className="lead text-fade mb-4">
                 Discover stays from seaview villas to city apartments — tailored
@@ -57,13 +95,8 @@ const Hero = () => {
               </p>
             </div>
 
-            {/* 🟢 Search Card */}
-            <div
-              className="col-lg-5"
-              style={{
-                marginTop: "-20px", // 👈 brings the card slightly upward (closer to hero text)
-              }}
-            >
+            {/* Search Card */}
+            <div className="col-lg-5" style={{ marginTop: "-20px" }}>
               <div
                 className="card search-card p-3"
                 style={{
@@ -72,26 +105,49 @@ const Hero = () => {
                   backgroundColor: "rgba(255,255,255,0.9)",
                 }}
               >
-                <form className="row g-2 align-items-end">
+                <form className="row g-2 align-items-end" onSubmit={handleSearch}>
                   <div className="col-12">
                     <label className="form-label small mb-1">Where to</label>
                     <input
                       type="text"
+                      name="whereTo"
                       className="form-control"
                       placeholder="City, property, or landmark"
+                      value={formData.whereTo}
+                      onChange={handleChange}
+                      required
                     />
                   </div>
                   <div className="col-sm-6">
                     <label className="form-label small mb-1">Check-in</label>
-                    <input type="date" className="form-control" />
+                    <input
+                      type="date"
+                      name="checkIn"
+                      className="form-control"
+                      value={formData.checkIn}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
                   <div className="col-sm-6">
                     <label className="form-label small mb-1">Check-out</label>
-                    <input type="date" className="form-control" />
+                    <input
+                      type="date"
+                      name="checkOut"
+                      className="form-control"
+                      value={formData.checkOut}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
                   <div className="col-sm-6">
                     <label className="form-label small mb-1">Persons</label>
-                    <select className="form-select">
+                    <select
+                      name="persons"
+                      className="form-select"
+                      value={formData.persons}
+                      onChange={handleChange}
+                    >
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -101,7 +157,12 @@ const Hero = () => {
                   </div>
                   <div className="col-sm-6">
                     <label className="form-label small mb-1">Rooms</label>
-                    <select className="form-select">
+                    <select
+                      name="rooms"
+                      className="form-select"
+                      value={formData.rooms}
+                      onChange={handleChange}
+                    >
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -109,11 +170,30 @@ const Hero = () => {
                     </select>
                   </div>
                   <div className="col-12">
-                    <button className="btn btn-primary w-100">
-                      Search stays
-                    </button>
+                    <button className="btn btn-primary w-100">Search stays</button>
                   </div>
                 </form>
+
+                {/* Show filtered results */}
+                {filteredHotels.length > 0 && (
+                  <div className="mt-3">
+                    <h6>Available Stays in "{formData.whereTo}"</h6>
+                    <ul className="list-group">
+                      {filteredHotels.map((hotel) => (
+                        <li key={hotel.id} className="list-group-item">
+                          {hotel.name} - {hotel.location}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Show message only if searched and no results */}
+                {filteredHotels.length === 0 && formData.whereTo.trim() !== "" && (
+                  <p className="mt-3 text-danger">
+                    No stays found in "{formData.whereTo}"
+                  </p>
+                )}
               </div>
             </div>
             {/* End of Search Card */}

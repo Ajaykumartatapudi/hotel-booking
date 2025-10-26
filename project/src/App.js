@@ -1,20 +1,33 @@
 import React from "react";
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero"; 
+import Hero from "./components/Hero";
 import Content from "./components/Content";
-import "./App.css"; // or "./Content.css"
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from "./components/Footer";
+import About from "./components/About";
+import SignupForm from "./components/SignupForm";
+import SupportPage from "./components/SupportPage";
 
 function App() {
   return (
-    <div>
+    <Router>
       <Navbar />
-      <Hero />
-      {/* <MainContent /> */}
-      <Content/>
-    </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <Content />
+            </>
+          }
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="/signup" element={<SignupForm />} />
+        <Route path="/support" element={<SupportPage />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
