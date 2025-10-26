@@ -58,7 +58,9 @@ const Content = () => {
         {/* Recommended Section */}
         <div className="d-flex justify-content-between align-items-baseline mb-3">
           <h2>Recommended stays for you</h2>
-          <a href="#" className="text-decoration-none small">See all recommendations</a>
+          <a href="#" className="text-decoration-none small">
+            See all recommendations
+          </a>
         </div>
 
         <div className="row g-3">
